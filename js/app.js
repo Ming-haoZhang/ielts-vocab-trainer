@@ -64,7 +64,7 @@ function navigate(hash) {
 
 function route() {
   const parts = parseHash();
-  const [section, a, b, c] = parts;
+  const [section, a, b, c, d] = parts;
 
   // highlight nav
   document.querySelectorAll('.site-nav a').forEach(a => a.classList.remove('active'));
@@ -74,8 +74,16 @@ function route() {
 
   if (!section) return renderHome();
   if (section === 'unit' && a != null && b != null) return renderUnit(a, +b);
-  if (section === 'train' && a && b != null && c != null) {
-    return renderTrain(a, b, +c);
+
+  if (section === 'train') {
+    // /train/scene/:chapter/:sceneId      — 4 segments, sceneId is string
+    if (a === 'scene' && b != null && c != null) {
+      return renderTrain(a, b, c);
+    }
+    // /train/:mode/:chapter/:list/:wordIdx — 5 segments, wordIdx is number
+    if ((a === 'cloze' || a === 'upgrade') && b != null && c != null && d != null) {
+      return renderTrain(a, b, c, +d);
+    }
   }
   if (section === 'review') return renderReview();
   if (section === 'stats') return renderStats();
