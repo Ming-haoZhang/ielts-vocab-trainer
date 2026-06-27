@@ -1,0 +1,18 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node / build artifacts (none here currently, but just in case)
+node_modules/
+dist/
+*.log
+
+# Don't commit the source PDF or extraction artifacts
+雅思词汇真经*.pdf
+data/raw/
+scripts/__pycache__/
+*.pyc
