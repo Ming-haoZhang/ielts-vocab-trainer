@@ -7,25 +7,39 @@ import { chatCompletion, parseLooseJson, isLLMConfigured } from '../llm.js';
 import { el, toast } from '../ui.js';
 import { recordAndAdvance } from './common.js';
 
-const SCENE_SYSTEM = `You are an IELTS Writing examiner. The learner writes a short paragraph (80-180 words) responding to a writing prompt. They are expected to use 3-5 target words naturally.
+const SCENE_SYSTEM = `You are an IELTS Writing examiner. The learner writes a paragraph (100-180 words) responding to a writing prompt. They are given 6-10 target vocabulary words and are expected to use AT LEAST 5 of them naturally — forcing awkward usage is a failure mode, not a success.
 
-Evaluate their writing strictly. Return ONLY a JSON object:
+This training is specifically about "遣词造句" (deliberate word deployment): the learner is trying to internalize these words so they can recall them later. Natural usage, correct collocations, and accurate meaning matter far more than quantity of usage.
+
+Evaluate the paragraph strictly. Return ONLY a JSON object with these fields:
 {
   "words": [
-    {"word": "<target word>", "used": true|false, "score": 0-10, "feedback": "<one sentence in Chinese about how it was used>"},
+    {
+      "word": "<target word>",
+      "used": true|false,
+      "score": 0-10,                              // 0 if not used; 6-8 if used correctly but ordinary; 9-10 if used precisely with strong collocation
+      "feedback": "<one sentence in Chinese about how it was used — be specific: collocation errors, meaning errors, awkward placement>"
+    },
     ...
   ],
-  "task_response": 0-10,      // does it answer the prompt?
+  "words_used_count": 0-10,    // how many of the targets were actually used
+  "task_response": 0-10,       // does it answer the prompt with clear position + supporting reasons?
   "grammar": 0-10,
-  "vocabulary_range": 0-10,
-  "coherence": 0-10,
-  "overall_band": 0-9,         // IELTS-style band score, can be 0.5 increments
-  "feedback": "2-4 sentences in Chinese summarizing strengths and main improvements",
-  "errors": ["specific grammar/vocab errors in English"],
-  "improved_paragraph": "a polished rewrite of the learner's paragraph, naturally using all target words"
+  "vocabulary_range": 0-10,    // overall lexical range, beyond just the targets
+  "coherence": 0-10,           // logical flow, paragraphing, cohesion devices
+  "overall_band": 0-9,         // IELTS-style band, can be 0.5 increments
+  "feedback": "2-4 sentences in Chinese: 1) what was done well, 2) which words need more practice, 3) one concrete improvement suggestion",
+  "errors": ["list specific grammar/vocab errors in English, e.g. 'subject-verb agreement in sentence 2'"],
+  "improved_paragraph": "a polished rewrite of the learner's paragraph, naturally using ALL target words correctly"
 }
 
-Be strict. If a target word is forced/awkward, score its usage low. Output ONLY the JSON object.`;
+Strict grading principles:
+- A word used but with wrong meaning → score 2-3
+- A word forced in awkwardly (breaks sentence flow) → score 3-4
+- A word used correctly but generically → score 6-7
+- A word used precisely with good collocation → score 8-10
+- Don't reward "padding" the paragraph to hit the word count — quality > length
+Output ONLY the JSON object.`;
 
 export async function runScene({ scene, entries, container, onAdvance }) {
   container.innerHTML = '';
@@ -35,22 +49,22 @@ export async function runScene({ scene, entries, container, onAdvance }) {
 
   const sceneCard = el('div', { class: 'scene-card' });
   sceneCard.appendChild(el('div', { class: 'scene-meta' },
-    `Chapter ${entries[0].chapter} · ${scene.id || ''}`));
+    `Chapter ${entries[0].chapter} · ${scene.id || ''} · 目标 ${entries.length} 词`));
   sceneCard.appendChild(el('div', { class: 'scene-prompt' }, scene.prompt));
-  if (scene.note) sceneCard.appendChild(el('div', { class: 'muted small' }, scene.note));
+  if (scene.note) sceneCard.appendChild(el('div', { class: 'muted small mt-3' }, scene.note));
   const hints = el('div', { class: 'scene-hints' });
   for (const e of entries) {
     hints.appendChild(el('span', { class: 'chip accent' }, `${e.word} · ${(e.definition||'').split(/[;；]/)[0]}`));
   }
-  sceneCard.appendChild(el('div', { class: 'mt-3 small muted' }, `请尽量自然地使用以下 ${entries.length} 个本单元的词：建议 80-180 词。`));
+  sceneCard.appendChild(el('div', { class: 'mt-3 small muted' }, `请自然地使用以下 ${entries.length} 个本单元的词（至少用上 5 个）：建议 100-180 词。`));
   sceneCard.appendChild(hints);
   main.appendChild(sceneCard);
 
   const editor = el('div', { class: 'editor-card large' });
   const ta = el('textarea', {
     class: 'textarea',
-    placeholder: `Write 80-180 words responding to the prompt above, naturally using the target words.\n写 80-180 词回应话题，把目标词自然地用进去。`,
-    rows: 9,
+    placeholder: `Write 100-180 words responding to the prompt. Naturally use at least 5 of the target words above.\n写 100-180 词回应话题，自然地用上至少 5 个目标词。`,
+    rows: 10,
   });
   editor.appendChild(ta);
   const foot = el('div', { class: 'editor-foot' });
@@ -95,8 +109,8 @@ export async function runScene({ scene, entries, container, onAdvance }) {
     if (submitBtn.disabled) return;
     const paragraph = ta.value.trim();
     if (!paragraph) { toast('请先写一段。', 'warn'); return; }
-    if (paragraph.split(/\s+/).length < 30) {
-      toast('太短了（< 30 词），至少写 30 词以上。', 'warn');
+    if (paragraph.split(/\s+/).length < 60) {
+      toast('太短了（< 60 词），段落造句建议至少 60 词。', 'warn');
     }
     submitBtn.disabled = true;
     submitBtn.textContent = '评分中…';

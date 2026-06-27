@@ -3,208 +3,208 @@
     "id": "geo-nature-1",
     "chapter": "1",
     "list": 1,
-    "count": 4,
-    "prompt": "Describe a natural landscape or weather event that made a deep impression on you. Explain why it affected you so strongly.",
-    "note": "可以描述台风、地震、火山、海啸等自然灾害，或风暴、日落等日常自然现象。"
+    "count": 8,
+    "prompt": "Describe a natural landscape or weather event that made a deep impression on you. Explain why it affected you so strongly, and what you learned from the experience.",
+    "note": "可以描述台风、地震、火山、海啸等自然灾害，或风暴、日落等日常自然现象。强烈建议加入具体的场景细节（地点、时间、感官体验），不要泛泛而谈。"
   },
   {
     "id": "geo-terrain-2",
     "chapter": "1",
     "list": 2,
-    "count": 4,
-    "prompt": "Some people prefer living in coastal areas; others prefer inland regions. Compare the two and explain which you would choose.",
-    "note": "可以涉及海洋、平原、高原、气候等概念。"
+    "count": 8,
+    "prompt": "Some people prefer living in coastal areas; others prefer inland regions. Compare the two lifestyles and explain which you would choose for a long-term home.",
+    "note": "可以涉及海洋、平原、高原、气候、人文氛围等。"
   },
   {
     "id": "geo-climate-4",
     "chapter": "1",
     "list": 4,
-    "count": 4,
-    "prompt": "Climate change is affecting many regions around the world. Discuss what individuals and governments can do to address it.",
-    "note": "可以讨论温室效应、洪水、干旱、热浪等。"
+    "count": 8,
+    "prompt": "Climate change is affecting many regions around the world. Discuss what individuals and governments can realistically do to address it. Use specific examples.",
+    "note": "可以讨论温室效应、洪水、干旱、热浪、能源政策。"
   },
   {
     "id": "plants-2",
     "chapter": "2",
     "list": 6,
-    "count": 4,
-    "prompt": "Many plant species are disappearing due to human activity. Should more effort be put into protecting them? Why or why not?",
-    "note": "可以讨论森林砍伐、生物多样性、可持续农业等。"
+    "count": 8,
+    "prompt": "Many plant species are disappearing due to human activity. Should more effort be put into protecting them? Why or why not? Discuss both the ecological and economic perspectives.",
+    "note": "可以讨论森林砍伐、生物多样性、可持续农业。"
   },
   {
     "id": "animals-3",
     "chapter": "3",
     "list": 9,
-    "count": 4,
-    "prompt": "Some argue that zoos are harmful to animals, while others see them as important for conservation. Discuss both views and give your opinion.",
-    "note": "可以涉及濒危物种保护、动物福利、生态系统。"
+    "count": 8,
+    "prompt": "Some argue that zoos are harmful to animals, while others see them as important for conservation and education. Discuss both views and give your own opinion with reasons.",
+    "note": "可以涉及濒危物种保护、动物福利、生态系统、教育价值。"
   },
   {
     "id": "space-4",
     "chapter": "4",
     "list": 10,
-    "count": 4,
-    "prompt": "Space exploration costs enormous amounts of money. Do you think it is justified? Give reasons for your answer.",
-    "note": "可以讨论宇宙探索、外星生命、科学研究价值。"
+    "count": 8,
+    "prompt": "Space exploration costs enormous amounts of public money. Do you think it is justified? Discuss the scientific, economic, and philosophical reasons for or against it.",
+    "note": "可以讨论宇宙探索、外星生命、科学研究价值、技术溢出。"
   },
   {
     "id": "edu-5",
     "chapter": "5",
     "list": 13,
-    "count": 4,
-    "prompt": "Some people believe that the purpose of education is to prepare students for a career; others think education should help students develop as whole people. Discuss both sides.",
-    "note": "可以涉及学术、技能、批判性思维。"
+    "count": 8,
+    "prompt": "Some people believe that the purpose of education is to prepare students for a career; others think education should help students develop as whole people. Discuss both sides and give your view.",
+    "note": "可以涉及学术、技能、批判性思维、人格塑造。"
   },
   {
     "id": "edu-pressure",
     "chapter": "5",
     "list": 16,
-    "count": 4,
-    "prompt": "Many students feel intense pressure from exams and parental expectations. What are the causes of this pressure, and what can be done to reduce it?",
-    "note": "可以讨论评估体系、心理健康、教学方法。"
+    "count": 8,
+    "prompt": "Many students feel intense pressure from exams and parental expectations. What are the main causes of this pressure, and what measures could schools and parents take to reduce it?",
+    "note": "可以讨论评估体系、心理健康、教学方法、家庭沟通。"
   },
   {
     "id": "tech-6",
     "chapter": "6",
     "list": 18,
-    "count": 4,
-    "prompt": "New technologies are changing the way we work and communicate. Do the benefits of these changes outweigh the drawbacks?",
-    "note": "可以讨论自动化、信息过载、人际连接。"
+    "count": 8,
+    "prompt": "New technologies are changing the way we work and communicate. Do the benefits of these changes outweigh the drawbacks? Support your view with examples.",
+    "note": "可以讨论自动化、信息过载、人际连接、隐私。"
   },
   {
     "id": "culture-7",
     "chapter": "7",
     "list": 20,
-    "count": 4,
-    "prompt": "Cultural heritage (historical sites, traditions, languages) is disappearing in many places. Why is it important to preserve it, and how should it be done?",
+    "count": 8,
+    "prompt": "Cultural heritage (historical sites, traditions, languages) is disappearing in many places. Why is it important to preserve it, and what practical measures can be taken?",
     "note": "可以涉及传统、宗教、艺术、语言保护。"
   },
   {
     "id": "language-8",
     "chapter": "8",
     "list": 22,
-    "count": 4,
-    "prompt": "Some say that learning a foreign language is becoming less important because of translation technology. Do you agree or disagree?",
+    "count": 8,
+    "prompt": "Some say that learning a foreign language is becoming less important because of translation technology. Do you agree or disagree? Give reasons and examples.",
     "note": "可以讨论文化交流、翻译工具的局限、语言学习的认知益处。"
   },
   {
     "id": "sports-9",
     "chapter": "9",
     "list": 24,
-    "count": 4,
-    "prompt": "Some people argue that competitive sports put too much pressure on young athletes. Discuss both sides and give your opinion.",
-    "note": "可以涉及团队合作、身心健康、过度训练。"
+    "count": 8,
+    "prompt": "Some people argue that competitive sports put too much pressure on young athletes. Discuss both sides of this debate and give your own opinion.",
+    "note": "可以涉及团队合作、身心健康、过度训练、运动伤害。"
   },
   {
     "id": "recycling-10",
     "chapter": "10",
     "list": 27,
-    "count": 4,
-    "prompt": "Many products today are designed to be disposable rather than durable. What problems does this cause, and how could the situation be improved?",
-    "note": "可以讨论环保、消费主义、可持续发展。"
+    "count": 8,
+    "prompt": "Many products today are designed to be disposable rather than durable. What problems does this cause, and how could the situation be improved by individuals, companies, and governments?",
+    "note": "可以讨论环保、消费主义、可持续发展、产品设计。"
   },
   {
     "id": "fashion-11",
     "chapter": "11",
     "list": 29,
-    "count": 4,
-    "prompt": "Fashion trends change very quickly. Some people enjoy keeping up with them; others prefer a more stable personal style. Discuss both attitudes.",
-    "note": "可以讨论个性表达、消费主义、文化身份。"
+    "count": 8,
+    "prompt": "Fashion trends change very quickly. Some people enjoy keeping up with them; others prefer a more stable personal style. Compare the two attitudes and explain which you find more reasonable.",
+    "note": "可以讨论个性表达、消费主义、文化身份、可持续性。"
   },
   {
     "id": "food-12",
     "chapter": "12",
     "list": 31,
-    "count": 4,
-    "prompt": "Many people's diets today are unhealthy. What are the causes of this, and what can individuals and governments do to improve it?",
-    "note": "可以涉及快餐、加工食品、健康教育、政策。"
+    "count": 8,
+    "prompt": "Many people's diets today are unhealthy. What are the main causes of this, and what can individuals and governments do to improve it?",
+    "note": "可以涉及快餐、加工食品、健康教育、政策、食品安全。"
   },
   {
     "id": "architecture-13",
     "chapter": "13",
     "list": 33,
-    "count": 4,
-    "prompt": "Some old buildings are demolished to make way for new construction. Should historic architecture be preserved, or is modern development more important?",
-    "note": "可以涉及城市更新、文化遗产、可持续设计。"
+    "count": 8,
+    "prompt": "Some old buildings are demolished to make way for new construction. Should historic architecture be preserved, or is modern development more important? Discuss with examples.",
+    "note": "可以涉及城市更新、文化遗产、可持续设计、社区记忆。"
   },
   {
     "id": "travel-14",
     "chapter": "14",
     "list": 36,
-    "count": 4,
+    "count": 8,
     "prompt": "International travel is now more affordable than ever. Discuss the positive and negative effects of this trend on the countries that tourists visit.",
-    "note": "可以涉及文化交流、环境保护、本地经济。"
+    "note": "可以涉及文化交流、环境保护、本地经济、文化冲击。"
   },
   {
     "id": "politics-15",
     "chapter": "15",
     "list": 39,
-    "count": 4,
-    "prompt": "Some people are very engaged in political affairs; others avoid politics altogether. What factors influence a person's level of political engagement?",
-    "note": "可以讨论公民意识、教育、媒体影响。"
+    "count": 8,
+    "prompt": "Some people are very engaged in political affairs; others avoid politics altogether. What factors influence a person's level of political engagement? Is high engagement always good?",
+    "note": "可以讨论公民意识、教育、媒体影响、信息可信度。"
   },
   {
     "id": "economy-16",
     "chapter": "16",
     "list": 42,
-    "count": 4,
-    "prompt": "Many economists argue that continuous economic growth is not sustainable. Do you agree? What alternatives might there be?",
-    "note": "可以涉及消费、资源、环境、幸福指数。"
+    "count": 8,
+    "prompt": "Many economists argue that continuous economic growth is not sustainable. Do you agree? What alternatives might there be, and what challenges would they face?",
+    "note": "可以涉及消费、资源、环境、幸福指数、循环经济。"
   },
   {
     "id": "law-17",
     "chapter": "17",
     "list": 45,
-    "count": 4,
-    "prompt": "Laws differ greatly between countries. Some argue that there should be more international legal standards; others say each country should decide for itself. Discuss.",
-    "note": "可以涉及司法独立、文化差异、全球化。"
+    "count": 8,
+    "prompt": "Laws differ greatly between countries. Some argue that there should be more international legal standards; others say each country should decide for itself. Discuss both views.",
+    "note": "可以涉及司法独立、文化差异、全球化、人权。"
   },
   {
     "id": "conflict-18",
     "chapter": "18",
     "list": 48,
-    "count": 4,
-    "prompt": "Throughout history, military conflict has shaped many societies. Is conflict ever justified? When and why?",
-    "note": "可以涉及自卫、人权、国际法。"
+    "count": 8,
+    "prompt": "Throughout history, military conflict has shaped many societies. Is conflict ever justified? Discuss the conditions under which it might be, and the alternatives that usually exist.",
+    "note": "可以涉及自卫、人权、国际法、外交手段。"
   },
   {
     "id": "social-19",
     "chapter": "19",
     "list": 50,
-    "count": 4,
-    "prompt": "Many people today feel isolated despite being more connected than ever online. What causes this, and what can be done about it?",
-    "note": "可以涉及社交媒体、社区、社会关系。"
+    "count": 8,
+    "prompt": "Many people today feel isolated despite being more connected than ever online. What do you think causes this, and what could individuals and communities do about it?",
+    "note": "可以涉及社交媒体、社区、社会关系、心理健康。"
   },
   {
     "id": "behavior-20",
     "chapter": "20",
     "list": 53,
-    "count": 4,
-    "prompt": "Habits are powerful — they shape our days and our lives. Describe a habit you want to change, and explain how you would go about changing it.",
-    "note": "可以涉及行为心理学、自我提升、意志力。"
+    "count": 8,
+    "prompt": "Habits are powerful — they shape our days and our lives. Describe a habit you want to change, explain why you want to change it, and outline how you would go about changing it.",
+    "note": "可以涉及行为心理学、自我提升、意志力、环境设计。"
   },
   {
     "id": "health-21",
     "chapter": "21",
     "list": 58,
-    "count": 4,
-    "prompt": "Many people struggle to maintain a healthy lifestyle in modern society. What makes it difficult, and what solutions would you suggest?",
-    "note": "可以涉及压力、饮食、运动、医疗。"
+    "count": 8,
+    "prompt": "Many people struggle to maintain a healthy lifestyle in modern society. What makes it difficult, and what solutions would you suggest at the personal and societal levels?",
+    "note": "可以涉及压力、饮食、运动、医疗、工作文化。"
   },
   {
     "id": "mindset-21",
     "chapter": "21",
     "list": 60,
-    "count": 4,
-    "prompt": "Resilience — the ability to recover from setbacks — is increasingly seen as crucial for success. Do you agree? Why or why not?",
+    "count": 8,
+    "prompt": "Resilience — the ability to recover from setbacks — is increasingly seen as crucial for success. Do you agree? Discuss with examples of when resilience helped or hurt people.",
     "note": "可以涉及心理韧性、情感管理、人生哲学。"
   },
   {
     "id": "time-22",
     "chapter": "22",
     "list": 63,
-    "count": 4,
-    "prompt": "People in modern life often feel they have too much to do and too little time. Discuss the causes of this and possible solutions.",
-    "note": "可以涉及时间管理、技术、工作文化。"
+    "count": 6,
+    "prompt": "People in modern life often feel they have too much to do and too little time. Discuss the causes of this and possible solutions, both personal and structural.",
+    "note": "List 63 词数较少，只给 6 个目标词。可以涉及时间管理、技术、工作文化、注意力。"
   }
 ]

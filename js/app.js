@@ -92,7 +92,7 @@ function renderHome() {
   app.appendChild(el('div', { class: 'row between mb-4' }, [
     el('div', {}, [
       el('h1', {}, '雅思词汇真经 · 遣词造句训练'),
-      el('p', { class: 'muted' }, '看到词，写出句。每个单元三种训练模式，针对性练"用词"而不是"背词"。'),
+      el('p', { class: 'muted' }, '背了不用等于没背。每个单元给你 6-10 个本单元的词，写一段 100-180 词的回应，让 LLM 逐词打分。'),
     ]),
     el('div', { class: 'col gap-2', style: 'min-width:200px;' }, [
       el('div', { class: 'small muted' }, '总体进度'),
@@ -104,9 +104,9 @@ function renderHome() {
   if (!isLLMConfigured()) {
     app.appendChild(el('div', { class: 'banner warn mb-4' }, [
       el('strong', {}, '⚠ 还没配置 LLM。'),
-      ' 请到 ',
+      ' 主模式"段落造句"依赖 LLM 评分，请先到 ',
       el('a', { href: '#/settings' }, '设置'),
-      ' 填写 endpoint 与 API key，否则"情境造句"和"句子升级"模式无法评分。',
+      ' 填写 endpoint + API key + model。DeepSeek / OpenAI / OpenRouter / Ollama 都行。',
     ]));
   }
 
@@ -187,41 +187,81 @@ function renderUnit(chapter, list) {
   app.appendChild(el('div', { class: 'small muted mt-2 mb-4' },
     `本单元进度：${lp.attempted}/${lp.total} (${(lp.ratio * 100).toFixed(0)}%) · 平均分 ${lp.avgScore}`));
 
-  // mode picker
-  app.appendChild(el('h2', { class: 'mt-5' }, '选择训练模式'));
-  const modeGrid = el('div', { class: 'grid cols-3' });
-  const modes = [
-    { key: 'cloze', title: '看词造句', sub: '看单词 + 中文释义，写一句英文', accent: 'accent' },
-    { key: 'upgrade', title: '句子升级', sub: '把朴素句改成"雅"一点', accent: 'warn' },
-    { key: 'scene', title: '情境造句', sub: '给话题，写 80-180 词段落', accent: 'success' },
-  ];
-  for (const m of modes) {
-    const disabled = (m.key !== 'cloze') && !isLLMConfigured();
-    const card = el('div', { class: 'card hover' });
-    if (!disabled) {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => {
-        if (m.key === 'scene') {
-          // pick scene for this chapter
-          const scenes = getScenesForChapter(chapter);
-          if (!scenes.length) {
-            toast('该章节暂无情境题，请换个章节或先做其他训练。', 'warn');
-            return;
-          }
-          navigate(`#/train/scene/${chapter}/${scenes[0].id}`);
-        } else {
-          // start from first word
-          const first = words[0];
-          navigate(`#/train/${m.key}/${chapter}/${list}/${first.index}`);
-        }
-      });
-    }
-    card.appendChild(el('span', { class: `chip ${m.accent}` }, m.title));
-    card.appendChild(el('p', { class: 'mt-2 mb-2' }, m.sub));
-    if (disabled) card.appendChild(el('div', { class: 'small muted' }, '⚠ 需先配置 LLM（设置页）'));
-    modeGrid.appendChild(card);
+  // --- 主推：段落造句（hero mode）---
+  const scenes = getScenesForChapter(chapter);
+  const sceneReady = scenes.length > 0;
+  const llmReady = isLLMConfigured();
+  const heroCard = el('div', { class: 'card' });
+  heroCard.style.background = 'linear-gradient(180deg, #fafbff 0%, #ffffff 100%)';
+  heroCard.style.borderColor = '#dbe5fb';
+  heroCard.style.padding = '28px';
+
+  const heroBadge = el('div', { class: 'chip accent' }, '🎯 推荐');
+  const heroTitle = el('h2', { style: 'margin:8px 0 4px;' }, '段落造句');
+  const heroDesc = el('p', { class: 'muted', style: 'margin:0 0 16px;max-width:640px;' },
+    `给你 ${scenes[0]?.count || 8} 个本单元的词，写一段 100-180 词的回应。LLM 按雅思写作标准评分，并对每个目标词给出使用反馈——哪个用得自然、哪个用得别扭、哪个完全没用上。`);
+  heroCard.append(heroBadge, heroTitle, heroDesc);
+
+  const heroCta = el('button', { class: 'btn accent lg' }, '开始段落造句 →');
+  heroCta.disabled = !sceneReady || !llmReady;
+  heroCta.title = !sceneReady ? '该章节暂无情境题' : !llmReady ? '需先配置 LLM' : '';
+  if (!heroCta.disabled) {
+    heroCta.addEventListener('click', () => navigate(`#/train/scene/${chapter}/${scenes[0].id}`));
+  } else {
+    heroCta.style.opacity = '0.55';
   }
-  app.appendChild(modeGrid);
+  const heroCtaWrap = el('div', { class: 'row gap-3 mt-2' }, [heroCta]);
+  if (!sceneReady) heroCtaWrap.appendChild(el('span', { class: 'small muted' }, '该章节暂无情境题。'));
+  else if (!llmReady) heroCtaWrap.appendChild(el('a', { class: 'small', href: '#/settings' }, '先去设置页配置 LLM →'));
+  heroCard.appendChild(heroCtaWrap);
+
+  // 多场景提示
+  if (scenes.length > 1) {
+    const switchRow = el('div', { class: 'small muted mt-3' }, [
+      `本章节共 ${scenes.length} 个情境题：`,
+      ...scenes.map((s, i) => el('a', {
+        href: `#/train/scene/${chapter}/${s.id}`,
+        style: 'margin-right:10px;',
+      }, `${i + 1}. ${s.id}`)),
+    ]);
+    heroCard.appendChild(switchRow);
+  }
+  app.appendChild(heroCard);
+
+  // --- 辅助模式 ---
+  app.appendChild(el('h3', { class: 'mt-5 muted', style: 'font-weight:500;' }, '辅助训练'));
+  const auxGrid = el('div', { class: 'grid cols-2' });
+
+  // 快速单句（cloze）
+  const clozeCard = el('div', { class: 'card hover' });
+  clozeCard.appendChild(el('div', { class: 'chip' }, '📝 快速热身手'));
+  clozeCard.appendChild(el('h4', { style: 'margin:6px 0 4px;' }, '看词造句'));
+  clozeCard.appendChild(el('p', { class: 'small muted', style: 'margin:0;' }, '看一个单词和中文释义，30 秒写一句英文。不需要 LLM，本地基础检查。'));
+  clozeCard.style.cursor = 'pointer';
+  clozeCard.addEventListener('click', () => {
+    const first = words[0];
+    navigate(`#/train/cloze/${chapter}/${list}/${first.index}`);
+  });
+  auxGrid.appendChild(clozeCard);
+
+  // 句子升级
+  const upgradeCard = el('div', { class: 'card hover' });
+  upgradeCard.appendChild(el('div', { class: 'chip warn' }, '📈 高级'));
+  upgradeCard.appendChild(el('h4', { style: 'margin:6px 0 4px;' }, '句子升级'));
+  upgradeCard.appendChild(el('p', { class: 'small muted', style: 'margin:0;' }, '把朴素句改成"雅思风"。LLM 从升级幅度/语法/用词档次评分。'));
+  if (!llmReady) {
+    upgradeCard.style.opacity = '0.55';
+    upgradeCard.appendChild(el('div', { class: 'small muted mt-2' }, '需先配置 LLM'));
+  } else {
+    upgradeCard.style.cursor = 'pointer';
+    upgradeCard.addEventListener('click', () => {
+      const first = words[0];
+      navigate(`#/train/upgrade/${chapter}/${list}/${first.index}`);
+    });
+  }
+  auxGrid.appendChild(upgradeCard);
+
+  app.appendChild(auxGrid);
 
   // word list
   app.appendChild(el('h2', { class: 'mt-5' }, '本单元词汇'));
@@ -349,9 +389,13 @@ function renderTrain(mode, chapter, listOrIndex, wordIndex) {
 }
 
 function pickTargets(words, count) {
-  // Light variety: shuffle + prefer words without recent progress
+  // Light variety: shuffle + prefer words without recent progress.
+  // Hard cap at min(count, words.length) — never ask for more targets
+  // than the unit actually has.
+  const cap = Math.min(count || 8, words.length);
+  if (cap <= 0) return [];
   const arr = words.slice();
-  // simple stable-ish shuffle
+  // stable-ish shuffle
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -362,12 +406,12 @@ function pickTargets(words, count) {
     const p = storage.getProgress(wordKeyOf(w));
     const fresh = !p || (p.attempts || 0) < 2 || (p.score || 0) < 7;
     if (fresh) picked.push(w);
-    if (picked.length >= count) break;
+    if (picked.length >= cap) break;
   }
-  if (picked.length < count) {
+  if (picked.length < cap) {
     for (const w of arr) {
       if (!picked.includes(w)) picked.push(w);
-      if (picked.length >= count) break;
+      if (picked.length >= cap) break;
     }
   }
   return picked;
